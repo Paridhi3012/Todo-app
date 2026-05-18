@@ -14,7 +14,7 @@ pipeline {
             steps {
                 echo 'Installing backend dependencies...'
                 dir('backend') {
-                    sh 'npm install'
+                    bat 'npm install'
                 }
             }
         }
@@ -23,7 +23,7 @@ pipeline {
             steps {
                 echo 'Running tests...'
                 dir('backend') {
-                    sh 'npm test'
+                    bat 'npm test'
                 }
             }
         }
@@ -31,21 +31,21 @@ pipeline {
         stage('Build Docker Images') {
             steps {
                 echo 'Building Docker images...'
-                sh 'docker-compose build'
+                bat 'docker-compose build'
             }
         }
 
         stage('Deploy') {
             steps {
                 echo 'Deploying containers...'
-                sh 'docker-compose up -d'
+                bat 'docker-compose up -d'
             }
         }
 
         stage('Health Check') {
             steps {
                 echo 'Checking backend health...'
-                sh 'sleep 5 && curl -f http://localhost:5000/health || exit 1'
+                bat 'sleep 5 && curl -f http://localhost:5000/health || exit 1'
             }
         }
     }
